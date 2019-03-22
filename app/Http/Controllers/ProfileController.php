@@ -22,7 +22,7 @@ class ProfileController extends Controller
     public function index()
     {
         $profiles = Profile::all();
-        return view('/profile', compact('profiles'));
+        return view('profile.index', compact('profiles')) ->with('i', (request()->input('page',1) -1)*5);
     }
 
     /**
@@ -45,7 +45,6 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'avatar' => 'required',
             'nama' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
@@ -54,16 +53,18 @@ class ProfileController extends Controller
             'alamat' => 'required',
            
         ]);
-       Profile::create([
-        'nama' => $request->nama,
-        'tempat_lahir' => $request->tempat_lahir,
-        'tanggal_lahir' => $request->tanggal_lahir,
-        'nomor_telp' => $request->nomor_telepon,
-        'jenis_kelamin' => $request->jenis_kelamin,
-        'alamat' => $request->alamat
-       ]);
+        $data = new \App\Profile();
+        $data->nama = $request->input('nama');
+        $data->tempat_lahir = $request->input('tempat_lahir');
+        $data->tanggal_lahir = $request->input('tanggal_lahir');
+        $data->nomor_telepon = $request->input('nomor_telepon');
+        $data->jenis_kelamin = $request->input('jenis_kelamin');
+        $data->alamat = $request->input('alamat');
+        $path = $request->file('avatar')->store('avatars');
+        $data->avatar=$path;
+        $data->save();
        
-            $request->session()->flash('msg', 'Client Telah ditambahkan');
+            $request->session()->flash('msg', 'Profile Telah ditambahkan');
             return redirect('/profile');
     }
 
@@ -75,7 +76,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $profile = Profile::find($id);
+        return view('profile.detail', compact('profile'));
     }
 
     /**
