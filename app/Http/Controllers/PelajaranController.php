@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Jadwal;
 use Illuminate\Http\Request;
-use App\Profile;
+use App\Jadwal;
+use App\Pelajaran;
 
-class ProfileController extends Controller
+class PelajaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +19,11 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
+
     public function index()
     {
-        $profiles = Profile::all();
-        return view('profile.index', compact('profiles')) ->with('i', (request()->input('page',1) -1)*5);
+        $pelajarans = Pelajaran::all();
+        return view('pelajaran.index', compact('pelajarans')) ->with('i', (request()->input('page',1) -1)*5);
     }
 
     /**
@@ -32,8 +33,8 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $profile = new Profile();
-        return view('profile.create', compact('profile'));
+        $pelajaran = new Pelajaran();
+        return view('pelajaran.create', compact('pelajaran'));
     }
 
     /**
@@ -45,28 +46,25 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'avatar' => 'required',
-            'nama' => 'required',
-            'tempat_lahir' => 'required',
-            'tanggal_lahir' => 'required',
-            'nomor_telepon' => 'required',
-            'jenis_kelamin' => 'required',
-            'alamat' => 'required',
-           
+            'guru' => 'required',
+            'hari' => 'required',
+            'mapel' => 'required',
+            'tanggal' => 'required',
+            'kelas' => 'required',
+            'jurusan' => 'required',
+
         ]);
-        $data = new Profile();
-        $data->nama = $request->input('nama');
-        $data->tempat_lahir = $request->input('tempat_lahir');
-        $data->tanggal_lahir = $request->input('tanggal_lahir');
-        $data->nomor_telepon = $request->input('nomor_telepon');
-        $data->jenis_kelamin = $request->input('jenis_kelamin');
-        $data->alamat = $request->input('alamat');
-        $path = $request->file('avatar')->store('avatars');
-        $data->avatar=$path;
+        $data = new Pelajaran();
+        $data->guru = $request->input('guru');
+        $data->hari = $request->input('hari');
+        $data->mapel = $request->input('mapel');
+        $data->tanggal = $request->input('tanggal');
+        $data->kelas = $request->input('kelas');
+        $data->jurusan = $request->input('jurusan');
         $data->save();
-       
-            $request->session()->flash('msg', 'Profile Telah ditambahkan');
-            return redirect('/profile', compact('profile'));
+
+            $request->session()->flash('msg', 'Pelajaran Telah ditambahkan');
+            return redirect('/pelajaran');
     }
 
     /**
@@ -77,8 +75,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $profile = Profile::find($id);
-        return view('profile.detail', compact('profile'));
+        $pelajaran = Pelajaran::find($id);
+        return view('pelajaran.detail', compact('pelajaran'));
     }
 
     /**
@@ -112,6 +110,8 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $pelajaran = Pelajaran::find($id);
+        $pelajaran->delete();
+        return redirect()->route('pelajaran.index')
+                        ->with('success', 'Biodata berhasil dihapus');    }
 }
