@@ -51,8 +51,7 @@ class PelajaranController extends Controller
             'mapel' => 'required',
             'tanggal' => 'required',
             'kelas' => 'required',
-            'jurusan' => 'required',
-
+            'jurusan' => 'required'
         ]);
         $data = new Pelajaran();
         $data->guru = $request->input('guru');
@@ -62,8 +61,7 @@ class PelajaranController extends Controller
         $data->kelas = $request->input('kelas');
         $data->jurusan = $request->input('jurusan');
         $data->save();
-
-            $request->session()->flash('msg', 'Pelajaran Telah ditambahkan');
+        $request->session()->flash('msg', 'Pelajaran Telah ditambahkan');
             return redirect('/pelajaran');
     }
 
@@ -87,7 +85,8 @@ class PelajaranController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pelajaran = Pelajaran::find($id);
+        return view('pelajaran.edit', compact('pelajaran'));
     }
 
     /**
@@ -99,7 +98,24 @@ class PelajaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'guru' => 'required',
+            'hari' => 'required',
+            'mapel' => 'required',
+            'tanggal' => 'required',
+            'kelas' => 'required',
+            'jurusan' => 'required'
+        ]);
+        $data = Pelajaran::find($id);
+        $data->guru = $request->get('guru');
+        $data->hari = $request->get('hari');
+        $data->mapel = $request->get('mapel');
+        $data->tanggal = $request->get('tanggal');
+        $data->kelas = $request->get('kelas');
+        $data->jurusan = $request->get('jurusan');
+        $data->save();
+        $request->session()->flash('msg', 'Pelajaran Telah ditambahkan');
+            return redirect('/pelajaran');
     }
 
     /**
@@ -113,5 +129,6 @@ class PelajaranController extends Controller
         $pelajaran = Pelajaran::find($id);
         $pelajaran->delete();
         return redirect()->route('pelajaran.index')
-                        ->with('success', 'Biodata berhasil dihapus');    }
+                        ->with('success', 'Biodata berhasil dihapus');
+    }
 }

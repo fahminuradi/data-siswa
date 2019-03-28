@@ -7,7 +7,7 @@
             <h2><i class="fa fa-user"></i> Tentang Tamu</h2>
             <hr>
 
-            <h3><i class="fa fa-user-circle-o"></i>Data Diri</h3>
+            <h3><i class="fa fa-user-circle-o"></i>Data Diri</h3> <td>{{ $pelajaran->tanggal }}</td>
             </div>
             <div class="col-md-12">
             <table class="table table-hover table-striped table-bordered mt-1">
@@ -24,11 +24,6 @@
                 <tr>
                     <th>Pelajaran</th>
                     <td>{{ $pelajaran->mapel }}</td> 
-                </tr>
-
-                <tr>
-                    <th>Tanggal</th>
-                    <td>{{ $pelajaran->tanggal }}</td>
                 </tr>
 
                 <tr>

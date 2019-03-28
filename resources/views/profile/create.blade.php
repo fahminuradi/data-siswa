@@ -25,45 +25,16 @@
 				<strong>pilih gambar</strong>
 				<input type="file" name="avatar">
 			</div>
-  	  <div class="row">
-  	  	<div class="col-md-8">
-  	  	  <strong>Nama Lengkap: </strong>
-  	  	  <input type="text" name="nama" class="form-control" placeholder="masukan nama anda disini">
-  	  	</div>
-  	  	<div class="col-md-8">
-  	  	  <strong>Tempat Lahir: </strong>
-  	  	  <input type="text" name="tempat_lahir" class="form-control" placeholder="masukan kota kelahiran anda">
-  	  	</div>
-        <div class="col-md-8">
-          <strong>Tanggal Lahir:</strong>
-          <input type="date" name="tanggal_lahir" class="form-control">
-        </div>
-          <div class="col-md-8">
-          <strong>Nomor Telepon: </strong>
-          <input type="text" name="nomor_telepon" class="form-control" placeholder="masukan no telpon anda">
-        </div>
-				<div class="col-md-10">
-          <strong>Jenis Kelamin</strong>
-          <strong>
-          <select name="jenis_kelamin">
-            <option value="....">....</option>
-            <option value="Laki-Laki">Laki-Laki</option>
-            <option value="Perempuan">Perempuan</option>
-          </select>
-          </strong>
-					</div>
-          <div class="col-md-8">
-          <strong>Alamat: </strong>
-          <input type="text" name="alamat" class="form-control" placeholder="alamat lengkap anda">
-        </div>	
-	
-      </div>
-  	  	<div class="col-md-3">
-  	  	  <a href="{{route('profile.index')}}" class="btn btn-sm btn-danger">Kembali</a>
-  	  	  <button type="submit" class="btn btn-sm btn-primary">tambahkan</button>
-  	  	</div>
-  	  </div>
-  	</form>
 
+      @include('errors.errors')
+
+      {{ Form::open(['url' => 'profile', 'files'=>true]) }}
+      @include('profile._fields')
+        <div class="form-group">
+          {{ Form::submit('Tambah', ['class'=>'btn btn-primary']) }}
+          <a href="/profile" class="btn btn-danger">Kembali</a>
+        </div>
+        {!! Form::close() !!}
+    </form>
   </div>
 @endsection

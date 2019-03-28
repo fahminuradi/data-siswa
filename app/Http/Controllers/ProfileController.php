@@ -51,8 +51,7 @@ class ProfileController extends Controller
             'tanggal_lahir' => 'required',
             'nomor_telepon' => 'required',
             'jenis_kelamin' => 'required',
-            'alamat' => 'required',
-           
+            'alamat' => 'required'
         ]);
         $data = new Profile();
         $data->nama = $request->input('nama');
@@ -64,9 +63,8 @@ class ProfileController extends Controller
         $path = $request->file('avatar')->store('avatars');
         $data->avatar=$path;
         $data->save();
-       
-            $request->session()->flash('msg', 'Profile Telah ditambahkan');
-            return redirect('/profile', compact('profile'));
+        $request->session()->flash('msg', 'Profile Telah ditambahkan');
+            return redirect('/profile');
     }
 
     /**
@@ -89,7 +87,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        $profile = Profile::find($id);
+        return view('profile.edit', compact('profile'));
     }
 
     /**
@@ -101,7 +100,27 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'avatar' => 'required',
+            'nama' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'nomor_telepon' => 'required',
+            'jenis_kelamin' => 'required',
+            'alamat' => 'required'
+        ]);
+        $data = Profile::find($id);
+        $data->nama = $request->get('nama');
+        $data->tempat_lahir = $request->get('tempat_lahir');
+        $data->tanggal_lahir = $request->get('tanggal_lahir');
+        $data->nomor_telepon = $request->get('nomor_telepon');
+        $data->jenis_kelamin = $request->get('jenis_kelamin');
+        $data->alamat = $request->get('alamat');
+        $path = $request->file('avatar')->store('avatars');
+        $data->avatar=$path;
+        $data->save();
+        $request->session()->flash('msg', 'Profile Telah ditambahkan');
+            return redirect('/profile');
     }
 
     /**
@@ -112,6 +131,9 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $profile = Profile::find($id);
+        $profile->delete();
+        return redirect()->route('profile.index')
+                        ->with('success', 'sebuah data berhasil dihapus');
     }
 }

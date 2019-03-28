@@ -16,7 +16,7 @@
 	  	</tr>
 	  	@foreach ($pelajarans as $pelajaran)
 	  	<tr>
-	      <td>{{$pelajaran->kelas}}</td>
+	    <td>{{$pelajaran->kelas}}</td>
         <td>{{$pelajaran->jurusan}}</td>
         <td>{{$pelajaran->guru}}</td>
         <td>{{$pelajaran->hari}}</td>
@@ -24,7 +24,7 @@
 		  <td>
 	  	    <form action="{{route('pelajaran.destroy',$pelajaran->id)}}" method="post">
 	  	  	  <a class="btn btn-sm btn-primary" href="{{route('pelajaran.show',$pelajaran->id)}}"><i class="fa fa-info"></i>lihat</a>
-						<a class="btn btn-sm btn-warning" href="{{route('pelajaran.show',$pelajaran->id)}}"><i class="fa fa-info"></i>edit</a>
+						<a class="btn btn-sm btn-warning" href="{{route('pelajaran.edit',$pelajaran->id)}}"><i class="fa fa-info"></i>edit</a>
 	  	  	  @csrf
 	  	  	  @method('DELETE')
 	  	  	  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash">hapus</i></button>

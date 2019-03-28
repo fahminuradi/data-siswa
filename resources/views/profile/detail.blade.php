@@ -14,7 +14,7 @@
                 <tr>
                     <th>Nama</th>
                     <td>{{ $profile->nama }}</td>
-                    <td rowspan="6"><img src="{{Storage::url($profile->avatar)}}" style="width: 150px; height: 150px; border-radius: 50%; margin-right: 25px;"></td>
+                    <td rowspan="6"><img src="{{Storage::url($profile->avatar)}}" style="width: 225px; height: 300px; margin-right: 25px;"></td>
                 </tr>
 
                 <tr>
@@ -45,7 +45,4 @@
             </div>
             <a class="btn btn-danger" href="{{'/profile'}}">kembali</a>
         </div>
-    </div>
-@endsection
-
-            
+ @endsection

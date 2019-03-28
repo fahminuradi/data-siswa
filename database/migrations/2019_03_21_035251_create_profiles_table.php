@@ -15,7 +15,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('avatar')->default('default.jpg');
+            $table->string('avatar')->default('default.jpg')->nullable();
             $table->string('nama');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
